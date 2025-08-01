@@ -4,7 +4,7 @@ import { Home, User, Mail } from "lucide-react";
 
 const Sidebar: React.FC = () => {
   return (
-    <nav className="fixed top-16 left-0 h-full w-64 bg-gray-800 text-white p-6 transform transition-transform duration-300 z-40">
+    <nav className="fixed top-0 left-0 z-40 w-64 h-full p-6 text-white transition-transform duration-300 transform bg-gray-800 md:pt-12">
       <div className="space-y-4">
         <NavLink
           to="/"
