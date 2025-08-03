@@ -16,11 +16,26 @@ const AppContent: React.FC = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  // Close sidebar when clicking outside
+  const handleContentClick = (e: React.MouseEvent) => {
+    if (isSidebarOpen && theme === "dark") {
+      const target = e.target as HTMLElement;
+      // Check if the click is outside the sidebar and not on the hamburger button
+      if (!target.closest('aside') && !target.closest('button[aria-label="Toggle Menu"]')) {
+        setIsSidebarOpen(false);
+      }
+    }
+  };
+
   return (
-    <div className={`min-h-screen transition-all duration-500 ${theme}`}>
+    <div 
+      className={`min-h-screen transition-all duration-500 ${theme}`}
+      onClick={handleContentClick}
+    >
       <Header 
         showHamburger={theme === "dark"}
         onMenuClick={toggleSidebar}
+        isMobileMenuOpen={isSidebarOpen}
       />
       {theme === "dark" && (
         <aside 
@@ -32,7 +47,7 @@ const AppContent: React.FC = () => {
         </aside>
       )}
       <main
-        className={`pt-16 transition-all duration-500 ${
+        className={`pt-14 transition-all duration-500 ${
           theme === "dark" ? "md:ml-64" : ""
         }`}
       >

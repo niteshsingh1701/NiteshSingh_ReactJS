@@ -7,21 +7,38 @@ import logo from "../assets/theme.png";
 interface HeaderProps {
   showHamburger?: boolean;
   onMenuClick?: () => void;
+  isMobileMenuOpen?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
   showHamburger = false,
   onMenuClick,
+  isMobileMenuOpen: externalMobileMenuOpen,
 }) => {
   const { theme, setTheme } = useTheme();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [internalMobileMenuOpen, setInternalMobileMenuOpen] = useState(false);
+  
+  // Use external state for dark theme, internal state for other themes
+  const isMobileMenuOpen = theme === "dark" ? externalMobileMenuOpen : internalMobileMenuOpen;
 
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTheme(e.target.value as Theme);
   };
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    if (theme === "dark") {
+      onMenuClick?.();
+    } else {
+      setInternalMobileMenuOpen(!internalMobileMenuOpen);
+    }
+  };
+
+  const handleMobileMenuClose = () => {
+    if (theme === "dark") {
+      onMenuClick?.();
+    } else {
+      setInternalMobileMenuOpen(false);
+    }
   };
 
   // Dynamic styling based on current theme
@@ -183,21 +200,21 @@ const Header: React.FC<HeaderProps> = ({
               <Link
                 to="/"
                 className="block py-2 transition-opacity duration-300 hover:opacity-70"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={handleMobileMenuClose}
               >
                 Home
               </Link>
               <Link
                 to="/about"
                 className="block py-2 transition-opacity duration-300 hover:opacity-70"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={handleMobileMenuClose}
               >
                 About
               </Link>
               <Link
                 to="/contact"
                 className="block py-2 transition-opacity duration-300 hover:opacity-70"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={handleMobileMenuClose}
               >
                 Contact
               </Link>
