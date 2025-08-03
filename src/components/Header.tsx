@@ -72,51 +72,85 @@ const Header: React.FC<HeaderProps> = ({
         {/* App Logo/Name */}
         <Link
           to="/"
-          className="text-2xl font-bold transition-opacity duration-300 hover:opacity-80"
+          className="flex-shrink-0 text-2xl font-bold transition-opacity duration-300 hover:opacity-80"
           style={getLogoStyle()}
         >
           <img
             src={logo}
             alt="ThemeSwitch Logo"
-            className="inline-block w-10 h-10 mr-2 md:w-12 md:h-12"
+            className="inline-block w-8 h-8 mr-2 md:w-12 md:h-12"
           />
           <span className="hidden sm:inline">ThemeSwitch</span>
         </Link>
 
-        {/* Mobile Menu Button - Only show for non-dark themes or when explicitly requested */}
-        {(!theme || theme !== "dark" || showHamburger) && (
-          <button
-            onClick={theme === "dark" ? onMenuClick : toggleMobileMenu}
-            className="p-2 transition-colors rounded-lg md:hidden hover:bg-gray-100 dark:hover:bg-gray-700"
-            aria-label="Toggle Menu"
-          >
-            <div className="flex flex-col justify-between w-6 h-5">
-              <span
-                className={`block w-full h-0.5 transition-transform duration-300 ${
-                  theme === "dark" ? "bg-white" : "bg-gray-800"
-                } ${
-                  isMobileMenuOpen && theme !== "dark"
-                    ? "rotate-45 translate-y-2"
-                    : ""
-                }`}
-              ></span>
-              <span
-                className={`block w-full h-0.5 transition-opacity duration-300 ${
-                  theme === "dark" ? "bg-white" : "bg-gray-800"
-                } ${isMobileMenuOpen && theme !== "dark" ? "opacity-0" : ""}`}
-              ></span>
-              <span
-                className={`block w-full h-0.5 transition-transform duration-300 ${
-                  theme === "dark" ? "bg-white" : "bg-gray-800"
-                } ${
-                  isMobileMenuOpen && theme !== "dark"
-                    ? "-rotate-45 -translate-y-2"
-                    : ""
-                }`}
-              ></span>
-            </div>
-          </button>
-        )}
+        {/* Mobile Controls Group - Theme Switcher and Hamburger */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          {/* Theme Switcher */}
+          <div className="relative w-[120px] sm:w-auto">
+            <select
+              value={theme}
+              onChange={handleThemeChange}
+              className={`w-full px-2 py-1 sm:px-3 sm:py-2 pr-8 sm:pr-10 rounded-lg appearance-none border focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-300 cursor-pointer text-sm sm:text-base ${getSelectClasses()}`}
+            >
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="colorful">Color</option>
+            </select>
+            <span
+              className={`pointer-events-none absolute inset-y-0 right-2 flex items-center ${
+                theme === "dark" ? "text-white" : "text-gray-950"
+              }`}
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </span>
+          </div>
+
+          {/* Mobile Menu Button - Only show for non-dark themes or when explicitly requested */}
+          {(!theme || theme !== "dark" || showHamburger) && (
+            <button
+              onClick={theme === "dark" ? onMenuClick : toggleMobileMenu}
+              className="p-2 transition-colors rounded-lg md:hidden hover:bg-gray-100 dark:hover:bg-gray-700"
+              aria-label="Toggle Menu"
+            >
+              <div className="flex flex-col justify-between w-6 h-5">
+                <span
+                  className={`block w-full h-0.5 transition-transform duration-300 ${
+                    theme === "dark" ? "bg-white" : "bg-gray-800"
+                  } ${
+                    isMobileMenuOpen && theme !== "dark"
+                      ? "rotate-45 translate-y-2"
+                      : ""
+                  }`}
+                ></span>
+                <span
+                  className={`block w-full h-0.5 transition-opacity duration-300 ${
+                    theme === "dark" ? "bg-white" : "bg-gray-800"
+                  } ${isMobileMenuOpen && theme !== "dark" ? "opacity-0" : ""}`}
+                ></span>
+                <span
+                  className={`block w-full h-0.5 transition-transform duration-300 ${
+                    theme === "dark" ? "bg-white" : "bg-gray-800"
+                  } ${
+                    isMobileMenuOpen && theme !== "dark"
+                      ? "-rotate-45 -translate-y-2"
+                      : ""
+                  }`}
+                ></span>
+              </div>
+            </button>
+          )}
 
         {/* Desktop Navigation - Only show for non-dark themes */}
         {theme !== "dark" && (
@@ -171,36 +205,6 @@ const Header: React.FC<HeaderProps> = ({
           </div>
         )}
 
-        {/* Theme Switcher */}
-        <div className="relative ml-4">
-          <select
-            value={theme}
-            onChange={handleThemeChange}
-            className={`w-full px-3 py-2 pr-10 rounded-lg appearance-none border focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-300 ${getSelectClasses()}`}
-          >
-            <option value="light">Light Mode</option>
-            <option value="dark">Dark Mode</option>
-            <option value="colorful">Colorful</option>
-          </select>
-          <span
-            className={`pointer-events-none absolute inset-y-0 right-3 flex items-center ${
-              theme === "dark" ? "text-white" : "text-gray-950"
-            }`}
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </span>
         </div>
       </div>
     </header>

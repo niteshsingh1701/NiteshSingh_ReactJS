@@ -46,11 +46,11 @@ const Home: React.FC = () => {
 
   return (
     <div className={`transition-all duration-500 ${getPageClasses()}`}>
-      <div className="container mx-auto px-4 py-8 pt-20">
+      <div className="container px-4 py-8 pt-20 mx-auto">
         {/* Hero Section */}
-        <section className="text-center mb-12">
+        <section className="mb-12 text-center">
           <h1
-            className={`text-5xl font-bold mb-6 ${
+            className={`text-4xl md:text-5xl font-bold mb-6 ${
               theme === "dark"
                 ? "text-white"
                 : theme === "colorful"

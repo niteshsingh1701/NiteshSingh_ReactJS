@@ -47,11 +47,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       className={`rounded-lg p-4 transition-all duration-300 transform cursor-pointer ${getCardClasses()}`}
     >
       {/* Product Image */}
-      <div className="aspect-square w-full mb-4 overflow-hidden rounded-md bg-gray-100 flex items-center justify-center">
+      <div className="flex items-center justify-center w-full mb-4 overflow-hidden bg-gray-100 rounded-md aspect-square">
         <img
           src={product.image}
           alt={product.title}
-          className="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-110"
+          className="object-contain max-w-full max-h-full transition-transform duration-300 hover:scale-110"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
               "https://via.placeholder.com/300x300?text=No+Image";
@@ -75,7 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         >
           {sanitizeText(product.description, 100)}
         </p>
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <span
             className={`font-bold ${theme === "dark" ? "text-xl" : "text-lg"}`}
           >
